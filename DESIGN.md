@@ -2,21 +2,20 @@
 
 ## Problem Statement
 
-
 Setting up repositories from GitHub, is a common initial step in the development of most open-source softwares. This majorly involves setting up the environment with the required services, libraries and frameworks, in a non-conflicting way. This task can often be arduous and can cost the developer precious time and energy.
 
 This is a problem because the software being developed will serve the same purpose on any platform it is designed for. However, the environment it will be developed in, will differ from platform to platform. This should not get in the way of what should otherwise be a seamless process for the development and subsequent production of the software. This is the problem we are trying to solve with EnvBot.
 
 ## Bot Description
 
-
 EnvBot is a Slack-bot that will help solve the above problem by automating the creation of the required environment. It will parse a GitHub repository given by the user and port its dependencies into a Docker image. It will also give an option to build the Docker image and create a container on the local machine. Another task which EnvBot will be capable is of setting up environments using pre-defined Dockerfiles. 
 
 Bots are generally used for small, simple and certain but laborious and time-consuming tasks. They help automate these tasks. Setting up an environment is one such time-consuming task, which involves the same set of commands, for different services, which don’t really change their names on a regular basis. Some services might require the user to type in long, complex commands on the terminal. If wrong, the command will either be rejected or might install something harmful to the setup. A bot can foolproof this process. Thus, EnvBot can be a good solution. 
 
-### Design Sketches
+## Design Sketches
 
-* Wireframe Mockup
+* Wireframe Mockup:
+
 ![wireframe](https://media.github.ncsu.edu/user/5692/files/ffd8e468-8107-11e6-918d-065c4a481533)
 
 * Storyboard
@@ -36,7 +35,7 @@ Remote Bot Server - This will constitute the heart of the EnvBot. The server wil
 
 Github REST API - DockerizeMe instance within the remote bot server will make REST Api calls to Github in order to recognize the technology and thus create the Docker Image as the end product.
 
-## Constraints -
+## Constraints
 
 1. Bot uses a command line terminal and requires setting up of environment variables. This is not possible while using the service of bot from Slack mobile application. So, we assume that bot services will not be used on mobile app. 
 2. Docker is a user-friendly layer on top of Linux Containers, a set of Linux kernel features allowing namespacing of file system configuration, network resources, process tables, and other kernel-mediated resources which were historically global. These features are very specific to Linux, and an application running in a Docker container is still interfacing directly with the host's Linux kernel (though it only has access to the subset of resources exposed to the namespaces in which it participates). Similarly, opcodes are run directly on the hardware with no emulation on virtualization in place, so hardware differences are not abstracted away either. Docker is thus not cross-OS (or cross-architecture) portable and therefore, makes our bot platform dependent. So, for our purpose, we assume that service of bot will be used only on single platform (probably Linux-based OS).
