@@ -2,7 +2,7 @@
 
 ## Problem Statement
 
-Setting up repositories from GitHub, is a common initial step in the development of most open-source softwares. This majorly involves setting up the environment with the required services, libraries and frameworks, in a non-conflicting way. This task can often be arduous and can cost the developer precious time and energy.
+Setting up repositories from GitHub is a common initial step in the development of most open-source softwares. This majorly involves setting up the environment with the required services, libraries and frameworks, in a non-conflicting way. This task can often be arduous and can cost the developer precious time and energy.
 
 This is a problem because the software being developed will serve the same purpose on any platform it is designed for. However, the environment it will be developed in, will differ from platform to platform. This should not get in the way of what should otherwise be a seamless process for the development and subsequent production of the software. This is the problem we are trying to solve with EnvBot.
 
