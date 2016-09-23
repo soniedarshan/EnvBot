@@ -20,6 +20,7 @@ Bots are generally used for small, simple and certain but laborious and time-con
 
 * Storyboard
 
+![storyboard](https://media.github.ncsu.edu/user/5692/files/61aae41a-8113-11e6-9f7d-61484c932073)
 
 ## Architecture Design
 
