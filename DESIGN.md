@@ -27,13 +27,13 @@ Bots are generally used for small, simple and certain but laborious and time-con
 ![Architechture Design](https://media.github.ncsu.edu/user/4504/files/f1820cfa-8107-11e6-8cd1-3d6d98547f4f)
 
 
-Application Interface - User will communicate with the EnvBot through the Slack- either web application and the desktop based application. The application interface will communicate with EnvBot server when invoked. The interface also indirectly interacts with the underlying host machine once docker container is set up.
+**Application Interface** - User will communicate with the EnvBot through the Slack- either web application and the desktop based application. The application interface will communicate with EnvBot server when invoked. The interface also indirectly interacts with the underlying host machine once docker container is set up.
 
-Application Host/Local Machine - When the user acknowledges to set up the environment, the docker image shall get executed on the local machine to create a docker container.
+**Application Host/Local Machine** - When the user acknowledges to set up the environment, the docker image shall get executed on the local machine to create a docker container.
 
-Remote Bot Server - This will constitute the heart of the EnvBot. The server will be constantly running, and hearing for its invocation from slack application. Upon any request, it will run the Dockerize Me Instance in order to create the docker image. Also, upon additional user request, this component will communicate with the application host/local machine component to execute the docker image.
+**Bot Server** - This will constitute the heart of the EnvBot. The server will be constantly running, and hearing for its invocation from slack application. Upon any request, it will run the Dockerize Me Instance in order to create the docker image. Also, upon additional user request, this component will communicate with the application host/local machine component to execute the docker image.
 
-Github REST API - DockerizeMe instance within the remote bot server will make REST Api calls to Github in order to recognize the technology and thus create the Docker Image as the end product.
+**Github REST API** - DockerizeMe instance within the remote bot server will make REST Api calls to Github in order to recognize the technology and thus create the Docker Image as the end product.
 
 ## Constraints
 
@@ -44,9 +44,9 @@ Github REST API - DockerizeMe instance within the remote bot server will make RE
 
 ### Additional Patterns
 
-1. Explicit Invocation - This would fit the most of the bot regime. The bot will not do anything till it has been asked. This would not be true for something like a sync bot or error reporting bot. But in our case, the bot will only start executing when someone mentions the bot and passes a github link. Hence our bot fits the explicit invocation pattern.  
+1. **Explicit Invocation** - This would fit the most of the bot regime. The bot will not do anything till it has been asked. This would not be true for something like a sync bot or error reporting bot. But in our case, the bot will only start executing when someone mentions the bot and passes a github link. Hence our bot fits the explicit invocation pattern.  
 
-2. Main Program and Subprogram - The bot would be the main program. When the bot receives a request from the user to set up an environment, it would call another service (Dockerize Me) and wait for it’s execution to complete. The service would return a response message which would be passed to the user. Hence this bot fits the main program and sub-program pattern. 
+2. **Main Program and Subprogram** - The bot would be the main program. When the bot receives a request from the user to set up an environment, it would call another service (Dockerize Me) and wait for it’s execution to complete. The service would return a response message which would be passed to the user. Hence this bot fits the main program and sub-program pattern. 
 
 
 
