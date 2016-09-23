@@ -35,7 +35,7 @@ Bots are generally used for small, simple and certain but laborious and time-con
 
 **Github REST API** - DockerizeMe instance within the remote bot server will make REST Api calls to Github in order to recognize the technology and thus create the Docker Image as the end product.
 
-## Constraints
+### Constraints
 
 1. Bot uses a command line terminal and requires setting up of environment variables. This is not possible while using the service of bot from Slack mobile application. So, we assume that bot services will not be used on mobile app. 
 2. Docker is a user-friendly layer on top of Linux Containers, a set of Linux kernel features allowing namespacing of file system configuration, network resources, process tables, and other kernel-mediated resources which were historically global. These features are very specific to Linux, and an application running in a Docker container is still interfacing directly with the host's Linux kernel (though it only has access to the subset of resources exposed to the namespaces in which it participates). Similarly, opcodes are run directly on the hardware with no emulation on virtualization in place, so hardware differences are not abstracted away either. Docker is thus not cross-OS (or cross-architecture) portable and therefore, makes our bot platform dependent. So, for our purpose, we assume that service of bot will be used only on single platform (probably Linux-based OS).
