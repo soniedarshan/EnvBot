@@ -1,8 +1,10 @@
 'use strict';
 
 var Botkit = require('botkit'); // Botkit Object
-var inputAnalyzer = require('./InputAnalyzer');
 var constants = require('./constants');
+
+var handlerREGEX = [/set/,/environment/,/repository/,/repo/, /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/];
+var messageTypes = ['direct_message','direct_mention','mention'];
 
 /* TESTBOT_TOKEN must be initialized in Environment Variables
  * add : export TESTBOT_TOKEN='xxxx'
@@ -25,45 +27,32 @@ controller.spawn({
 }).startRTM()
 
 // INPUT_HANDLERS :
-
-// test handler : hello 
-controller.hears('Hello',['direct_message','direct_mention','mention'], function(bot,message) {
-  console.log(message);
-  bot.reply(message,'Hello <@'+message.user+'>');
+controller.hears('Hey', messageTypes, function(bot,message) {
+	bot.reply(message,'Hello <@'+message.user+'>, how may I be of help? Mention me, and type in Help, or tell me if you need me to set up an environment for you.');
 });
 
-/*
-
-should look like : 
-
-controller.hears(expectedInput(), ['direct_message','direct_mention', 'mention'], function(bot, message) {
-	// decode given message
-	var input = inputAnalyzer.decode_message(message);
-	
-	// call DOCKERIZE_ME and return DockerFile
-	var DockerFile = createDockerFile();
-
-	// create a Snippet for the DockerFile
-	bot.reply('Create Snippet Code');
-
+controller.hears('Help', messageTypes, function(bot,message) {
+	bot.reply(message,'<@'+message.user+'>, Check this out.');	
 });
-*/
 
-/*
-function expectedInput() {
-	return 'REGEX'.match() // REGEX that would match with out input style.
-}
-*/
+controller.hears(handlerREGEX, messageTypes, function(bot, message) {
+	var pattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
+	if(!pattern.test(message.text)) {
+		bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
+	} else {
+		var repoData = {
+			body: message.text,
+			link: pattern.exec(message.text)[0]
+		};
 
-controller.hears('dockerizeMe', ['direct_message'], function(bot, message) {
-	var link = 'https://github.com/alt-code/DockerizeMe.git';
-
-	createDockerFile(link, function(dockerFile) {
-		if (dockerFile) {
-			bot.reply(message, dockerFile);
-		}
-	});
-
+		createDockerFile(repoData.link, function(dockerFile) {
+			if (dockerFile) {
+				bot.reply(message, dockerFile);
+			} else {
+				bot.reply(message, 'Error in creating docker file.')
+			}
+		});
+	}
 });
 
 function createDockerFile(repo, callback) {
