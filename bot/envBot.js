@@ -2,6 +2,7 @@
 
 var Botkit = require('botkit'); // Botkit Object
 var inputAnalyzer = require('./InputAnalyzer');
+var constants = require('./constants');
 
 /* TESTBOT_TOKEN must be initialized in Environment Variables
  * add : export TESTBOT_TOKEN='xxxx'
@@ -53,3 +54,38 @@ function expectedInput() {
 	return 'REGEX'.match() // REGEX that would match with out input style.
 }
 */
+
+controller.hears('dockerizeMe', ['direct_message'], function(bot, message) {
+	var link = 'https://github.com/alt-code/DockerizeMe.git';
+
+	createDockerFile(link, function(dockerFile) {
+		if (dockerFile) {
+			bot.reply(message, dockerFile);
+		}
+	});
+
+});
+
+function createDockerFile(repo, callback) {
+	const exec = require('child_process').exec;
+			
+	exec(`sh create_dockerfile.sh ${repo}`, {cwd : constants.cwd}, (error, stdout, stderr) => {
+		if (error) {
+			console.log(`Error in executing command : ${error}`);
+		} else if (stderr) {
+			console.log(`I/O Standard Error  : ${stderr}`);
+		} else {
+			exec('cat DockerFile', {cwd : constants.cwd}, (error, stdout, stderr) => {
+				if (error) {
+					console.log(`Error in executing command : ${error}`);
+				} else if (stderr) {
+					console.log(`I/O Standard Error  : ${stderr}`);
+				} else {
+					console.log(`Command to CAT output : ${stdout}`);
+					callback(stdout);
+				}
+			});
+		}
+		callback(null);
+	});		
+}
