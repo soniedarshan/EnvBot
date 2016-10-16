@@ -26,9 +26,35 @@ controller.spawn({
 // INPUT_HANDLERS :
 
 // test handler : hello 
-controller.hears('Hello',['direct_message','direct_mention','mention'], function(bot,message) {
-  console.log(message);
-  bot.reply(message,'Hello <@'+message.user+'>');
+// controller.hears('Hello',['direct_message','direct_mention','mention'], function(bot,message) {
+//   console.log(message);
+//   bot.reply(message,'Hello <@'+message.user+'>');
+// });
+
+controller.hears('Hey',['direct_message','direct_mention','mention'], function(bot,message) {
+  //console.log(message);
+  bot.reply(message,'Hello <@'+message.user+'>, how may I be of help? Mention me, and type in Help, or tell me if you need me to set up an environment for you.');
+});
+
+controller.hears('Help', ['direct_message','direct_mention','mention'], function(bot,message) {
+  //console.log(message);
+  bot.reply(message,'<@'+message.user+'>, Check this out.');
+});
+
+controller.hears([/set/,/environment/,/repository/,/repo/, /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/], ['direct_message', 'direct_mention', 'mention'], function(bot, message) {
+	var patt = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
+	if(!patt.test(message.text))
+	{
+		bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
+	}
+	else
+	{
+		bot.reply(message, '<@' + message.user + '>, I\'ll get right on that!');
+		var repoData = {
+			body: message.text,
+			link: patt.exec(message.text)[0]
+		};
+	}
 });
 
 /*
