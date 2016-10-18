@@ -3,6 +3,8 @@
 var Botkit = require('botkit'); // Botkit Object
 var inputAnalyzer = require('./InputAnalyzer');
 
+
+var gitSite = /(http|ftp|https):\/\/github([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/;
 /* TESTBOT_TOKEN must be initialized in Environment Variables
  * add : export TESTBOT_TOKEN='xxxx'
  * run : source ~/bash_profile
@@ -41,11 +43,15 @@ controller.hears('Help', ['direct_message','direct_mention','mention'], function
   bot.reply(message,'<@'+message.user+'>, Check this out.');
 });
 
-controller.hears([/set/,/environment/,/repository/,/repo/, /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/], ['direct_message', 'direct_mention', 'mention'], function(bot, message) {
+controller.hears([/set/i,/environment/i,/repository/i,/repo/i, gitSite], ['direct_message', 'direct_mention', 'mention'], function(bot, message) {
 	var patt = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
 	if(!patt.test(message.text))
 	{
 		bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
+	}
+	else if(patt.test(message.text) && !gitSite.test(message.text))
+	{
+		bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
 	}
 	else
 	{
