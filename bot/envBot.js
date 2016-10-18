@@ -40,12 +40,11 @@ controller.hears('Help', messageTypes, function(bot,message) {
 
 
 controller.hears(handlerREGEX, messageTypes, function(bot, message) {
-	var pattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
-	if(!pattern.test(message.text)) 
+	if(!urlPattern.test(message.text)) 
 	{
 		bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
 	}
-	else if(patt.test(message.text) && !gitSite.test(message.text))
+	else if(urlPattern.test(message.text) && !gitSite.test(message.text))
 	{
 		bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
 	} 
