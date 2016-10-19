@@ -2,9 +2,9 @@
 
 Use Case 1
 ```
-Use Case: Create a meeting
+Use Case: Generate a DockerFile from Github repo
 1 Preconditions
-   User must have google calendar api tokens in system.
+   User must have code repository on Github.
 2 Main Flow
    User will request meeting and provide list of attendees [S1]. Bot will provide  possible meeting times and user confirms [S2]. Bot creates meeting and posts link [S3].
 3 Subflows
@@ -17,7 +17,7 @@ Use Case: Create a meeting
 
 Use Case 2
 ```
-Use Case: Create a meeting
+Use Case: Build Docker image from Github repo
 1 Preconditions
    User must have google calendar api tokens in system.
 2 Main Flow
@@ -32,7 +32,7 @@ Use Case: Create a meeting
 
 Use Case 3
 ```
-Use Case: Create a meeting
+Use Case: Generate Docker image for user-defined technology stack
 1 Preconditions
    User must have google calendar api tokens in system.
 2 Main Flow
