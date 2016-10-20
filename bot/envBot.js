@@ -7,7 +7,8 @@ var dockerData = require('./dockerData');
 var messageTypes = ['direct_message','direct_mention','mention'];
 
 var gitSite = /(http|ftp|https):\/\/(github+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/;
-var urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))+([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
+var urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
+
 var starterREGEX = [/hey/i, /help/i, /how/i];
 var dockerCmdREGEX = [/request docker image( |:)*(python|mean|lamp)+/i];
 var dockerFileREGEX = [/(docker file|dockerfile)/i, gitSite];
@@ -35,7 +36,20 @@ controller.spawn({
 
 // HANDLE HELP
 controller.hears(starterREGEX, messageTypes, function(bot,message) {
-	bot.reply(message,'Hello <@'+message.user+'>, how may I be of help? Mention me, and type in Help, or tell me if you need me to set up an environment for you.');
+	//'Hello <@'+message.user+'>, how may I be of help? Mention me, and type in Help, or tell me if you need me to set up an environment for you.'
+	var reply = {
+		"attachments": [
+        {
+            "fallback": "Hello <@" + message.user + ">, how may I be of help? Go to this link to check out the list of commands!",
+            "pretext": "Hello <@" + message.user + ">, how may I be of help? Go to this link to check out the list of commands!",
+            "title": "EnvBot, How-to",
+            "title_link": "https://pages.github.ncsu.edu/dasoni/EnvBot/",
+            "text": "Command Cheatsheet",
+            "color": "#7CD197"
+        }
+    ]
+	};
+	bot.reply(message,reply);
 });
 
 // USE CASE 1 : Generate a DockerFile from Github Repo
@@ -46,7 +60,7 @@ controller.hears(dockerFileREGEX, messageTypes, function(bot, message) {
 	} else if(urlPattern.test(message.text) && !gitSite.test(message.text)) {
 		bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
 	} else {
-
+		
 		var repoData = {
 			body: message.text,
 			link: urlPattern.exec(message.text)[0]
