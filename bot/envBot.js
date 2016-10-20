@@ -10,7 +10,7 @@ var gitSite = /(http|ftp|https):\/\/(github+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+
 var urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
 
 var starterREGEX = [/hey/i, /help/i, /how/i];
-var dockerCmdREGEX = [/request docker image( |:)*(python|mean|lamp)+/i];
+var dockerCmdREGEX = [/request docker image( |:)*(python|mean|lamp)*/i];
 var dockerFileREGEX = [/(docker file|dockerfile)/i, gitSite];
 
 
@@ -88,26 +88,54 @@ controller.hears(dockerFileREGEX, messageTypes, function(bot, message) {
 // USE CASE 2 : Return Docker Image for pre-defined popular technology environments.
 controller.hears(dockerCmdREGEX, messageTypes, function(bot, message) {
 	
-	var stacks = /(mean|python|lamp)/ug;
-	var stack = stacks.exec(message.text)[0];
+	var title, pretext, text = '';
 
-	if (Object.keys(dockerData).includes(stack)) {
-		var commands = "";
+	var stacks = /(mean|python|lamp)/i;
+	var stack = '';
+	if (stacks.test(message.text)) {
+		stack = stacks.exec(message.text)[0];
+	}
 
-		dockerData[stack].forEach(function(cmd) {
-			commands += cmd + "\n";
+	if (message.text === 'request docker image') {
+		title = 'Available Docker Images';
+		pretext = '';
+
+		var count = 1;
+		Object.keys(dockerData).forEach(function(key) {
+			text += count + ' ' + key + '\n';
+			count += 1;
 		});
 
-		var reply = {
-			"attachments": [{
-				"title" : "Commands",
-				"pretext" : "You can enter the following commands to setup the docker image: ",
-				"text" : commands,
-				"mrkdwn_in" : ["text", "pretext"]
-		}]};
+	} else if (Object.keys(dockerData).includes(stack)) {
+		title = 'Commands';
+		pretext = 'You can enter the following commands to setup the docker image: ';
 
-		bot.reply(message, reply);
+		text = '';
+
+		dockerData[stack].forEach(function(cmd) {
+			text += cmd + "\n";
+		});
+	} else {
+		title = 'Available Docker Images';
+		pretext = 'Sorry. Docker image unavailable.';
+
+		var count = 1;
+		Object.keys(dockerData).forEach(function(key) {
+			text += count + ' ' + key + '\n';
+			count += 1;
+		});
 	}
+
+	var reply = {
+		"attachments" : [{
+			"title" : title,
+			"pretext" : pretext,
+			"text" : text,
+			mrkdwn_in : ['text', 'pretext']
+		}]
+	};
+
+	bot.reply(message, reply)
 });
 
 // TODO USE CASE 3 : Build Docker image from Github repo
