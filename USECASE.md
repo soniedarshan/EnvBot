@@ -38,7 +38,7 @@ Use Case: Build Docker image from Github repo
    User will request Docker image for code repo on Github [S1]. Bot creates Docker image and posts docker command to pull the image from DockerHub [S2].
 3 Subflows
   [S1] User types dockerimage command followed by web address of Github repo.
-  [S2] Bot will use generate a DockerFile if DockerFile is not present in github repo and adds the DockerFile to build the image.
+  [S2] Bot will generate and add the DockerFile and return a DockerHub image address with pull command. 
 4 Alternative Flows
   [E1] Image build fails.
 ```
