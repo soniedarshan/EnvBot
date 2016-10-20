@@ -5,6 +5,7 @@ var constants = require('./constants');
 var gitSite = /(http|ftp|https):\/\/github([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/;
 var urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
 var handlerREGEX = [/set/i, /environment/i, /repository/i, /repo/i, gitSite];
+var starterREGEX = [/help/i, /how/i];
 var messageTypes = ['direct_message','direct_mention','mention'];
 
 
@@ -34,7 +35,7 @@ controller.hears('Hey', messageTypes, function(bot,message) {
 	bot.reply(message,'Hello <@'+message.user+'>, how may I be of help? Mention me, and type in Help, or tell me if you need me to set up an environment for you.');
 });
 
-controller.hears('Help', messageTypes, function(bot,message) {
+controller.hears(starterREGEX, messageTypes, function(bot,message) {
 	bot.reply(message,'<@'+message.user+'>, Check this out.');	
 });
 
