@@ -8,6 +8,8 @@
   },
   "author": "",
   "dependencies": {
-    "botkit": "^0.4.0"
+    "botkit": "^0.4.0",
+    "nodemon": "^1.11.0",
+    "request": "^2.75.0"
   }
 }
