@@ -1,35 +1,36 @@
+[Trello Card](https://trello.com/b/xm0RHPxd)
+
 ##### Week 1
 
-| Deliverable   | Item Description  | Status  | Issues/Tasks
+| Deliverable   | Item Description  | Status  | Issues
 | ------------- | ------------  | ------------  |  ------------
 | Use Case Documentation      | Define 3 usecases and their user interaction flow          | Complete | &nbsp;
 | DockerizeMe Usability Study      | Explore DockerizeMe and its integration with bot       | Complete |  #2
 | Integrate Github, Docker, Slack Study     | Write toy examples to interact and integrate three services  |  Incomplete  |  #3
-| Mocking    | Usecase 1 - S1,S2  | Incomplete | &nbsp;
+| Mocking    | Usecase 1 - S1,S2  | Complete | &nbsp;
 
 
 ##### Week 2
 
-| Deliverable   | Item Description  | Status  | Issues/Tasks
+| Deliverable   | Item Description  | Status  | Issues
 | ------------- | ------------  | ------------  |  ------------
-| Use Case 1 - Subflow      | S1          | Complete | &nbsp;
+| Use Case 1 - Subflow      | S1          | Complete | #1
 | Use Case 1 - Subflow      | S2       | Complete |  &nbsp;
-| Mocking     | Usecase 2 - S1,S2,S3  |  Incomplete  |  &nbsp;
-| Mocking    | Usecase 3 - S1,S2  | Incomplete | &nbsp;
-| Selenium Tests    | Usecase 1  | Incomplete | &nbsp;
-
+| Mocking     | Usecase 2 - S1,S2,S3  |  Complete  |  &nbsp;
+| Mocking    | Usecase 3 - S1,S2  | Complete | &nbsp;
+| Selenium Tests    | Usecase 1  | Complete | &nbsp;
 
 
 ##### Week 3
 
-| Deliverable   | Item Description  | Status  | Issues/Tasks
+| Deliverable   | Item Description  | Status  | Issues
 | ------------- | ------------  | ------------  |  ------------
 | Use Case 2 - Subflow      | S1          | Complete | &nbsp;
 | Use Case 2 - Subflow      | S2       | Complete |  &nbsp;
 | Use Case 2 - Subflow      | S3       | Complete |  &nbsp;
 | Use Case 3 - Subflow      | S1       | Complete |  &nbsp;
 | Use Case 3 - Subflow      | S2       | Incomplete |  &nbsp;
-| Selenium Tests    | Usecase 2  | Incomplete | &nbsp;
-| Selenium Tests    | Usecase 3  | Incomplete | &nbsp;
-| Screencast  | Usecase 1,2,3  | Incomplete | &nbsp;
-| Screencast  | Selenium Tests  | Incomplete | &nbsp;
+| Selenium Tests    | Usecase 2  | Complete | &nbsp;
+| Selenium Tests    | Usecase 3  | Complete | &nbsp;
+| Screencast  | Usecase 1,2,3  | Complete | &nbsp;
+| Screencast  | Selenium Tests  | Complete | &nbsp;
