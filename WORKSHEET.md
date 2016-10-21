@@ -26,7 +26,7 @@
 | Deliverable   | Item Description  | Status  | Issues
 | ------------- | ------------  | ------------  |  ------------
 | Use Case 2 - Subflow      | S1          | Complete | &nbsp;
-| Use Case 2 - Subflow      | S2       | Complete |  &nbsp;
+| Use Case 2 - Subflow      | S2       | Complete | #4
 | Use Case 2 - Subflow      | S3       | Complete |  &nbsp;
 | Use Case 3 - Subflow      | S1       | Complete |  &nbsp;
 | Use Case 3 - Subflow      | S2       | Incomplete |  &nbsp;
