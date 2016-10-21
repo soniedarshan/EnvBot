@@ -5,7 +5,7 @@
 | Deliverable   | Item Description  | Status  | Issues
 | ------------- | ------------  | ------------  |  ------------
 | Use Case Documentation      | Define 3 usecases and their user interaction flow          | Complete | &nbsp;
-| DockerizeMe Usability Study      | Explore DockerizeMe and its integration with bot       | Complete |  #2
+| DockerizeMe Usability Study      | Explore DockerizeMe and its integration with bot       | Complete |  #2 #5
 | Integrate Github, Docker, Slack Study     | Write toy examples to interact and integrate three services  |  Incomplete  |  #3
 | Mocking    | Usecase 1 - S1,S2  | Complete | &nbsp;
 
@@ -26,10 +26,10 @@
 | Deliverable   | Item Description  | Status  | Issues
 | ------------- | ------------  | ------------  |  ------------
 | Use Case 2 - Subflow      | S1          | Complete | &nbsp;
-| Use Case 2 - Subflow      | S2       | Complete | #4
+| Use Case 2 - Subflow      | S2       | Complete | #6
 | Use Case 2 - Subflow      | S3       | Complete |  &nbsp;
 | Use Case 3 - Subflow      | S1       | Complete |  &nbsp;
-| Use Case 3 - Subflow      | S2       | Incomplete |  &nbsp;
+| Use Case 3 - Subflow      | S2       | Incomplete |  #3;
 | Selenium Tests    | Usecase 2  | Complete | &nbsp;
 | Selenium Tests    | Usecase 3  | Complete | &nbsp;
 | Screencast  | Usecase 1,2,3  | Complete | &nbsp;
