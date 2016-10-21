@@ -11,7 +11,7 @@ var urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\
 
 var starterREGEX = [/hey/i, /help/i, /how/i];
 var dockerCmdREGEX = [/request docker image( |:)*(python|mean|lamp)*/i];
-var dockerFileREGEX = [/(docker file|dockerfile)/i, gitSite];
+var dockerFileREGEX = [/(docker image|dockerimage)/i, gitSite];
 
 
 /* TESTBOT_TOKEN must be initialized in Environment Variables
@@ -50,48 +50,48 @@ controller.hears(starterREGEX, messageTypes, function(bot, message) {
     bot.reply(message, reply);
 });
 
-// USE CASE 1 : Generate a DockerFile from Github Repo
-controller.hears(dockerFileREGEX, messageTypes, function(bot, message) {
+// // USE CASE 1 : Generate a DockerFile from Github Repo
+// controller.hears(dockerFileREGEX, messageTypes, function(bot, message) {
 
-    if (!urlPattern.test(message.text)) {
-        bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
-    } else if (urlPattern.test(message.text) && !gitSite.test(message.text)) {
-        bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
-    } else {
+//     if (!urlPattern.test(message.text)) {
+//         bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
+//     } else if (urlPattern.test(message.text) && !gitSite.test(message.text)) {
+//         bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
+//     } else {
 
-        var repoData = {
-            body: message.text,
-            link: urlPattern.exec(message.text)[0]
-        };
+//         var repoData = {
+//             body: message.text,
+//             link: urlPattern.exec(message.text)[0]
+//         };
 
-        console.log('Calling create docker file', repoData.link);
+//         console.log('Calling create docker file', repoData.link);
 
-        var reply = {
-            "attachments": [{
-                "title": "Dockerfile",
-                "pretext": "",
-                "text": mockData['use-case-1'],
-                "mrkdwn_in": ["text", "pretext"]
-            }]
-        };
-        return bot.reply(message, reply);
+//         var reply = {
+//             "attachments": [{
+//                 "title": "Dockerfile",
+//                 "pretext": "",
+//                 "text": mockData['use-case-1'],
+//                 "mrkdwn_in": ["text", "pretext"]
+//             }]
+//         };
+//         return bot.reply(message, reply);
 
-        // createDockerFile(repoData.link, function(dockerFile) {
-        // 	if (dockerFile) {
-        // 		var reply = {
-        // 			"attachments": [{
-        // 				"title" : "Dockerfile",
-        // 				"pretext" : "",
-        // 				"text" : dockerFile,
-        // 				"mrkdwn_in" : ["text", "pretext"]
-        // 		}]};
-        // 		return bot.reply(message, reply);
-        // 	} else {
-        // 		return bot.reply(message, 'Error in creating docker file.')
-        // 	}
-        // });
-    }
-});
+//         // createDockerFile(repoData.link, function(dockerFile) {
+//         // 	if (dockerFile) {
+//         // 		var reply = {
+//         // 			"attachments": [{
+//         // 				"title" : "Dockerfile",
+//         // 				"pretext" : "",
+//         // 				"text" : dockerFile,
+//         // 				"mrkdwn_in" : ["text", "pretext"]
+//         // 		}]};
+//         // 		return bot.reply(message, reply);
+//         // 	} else {
+//         // 		return bot.reply(message, 'Error in creating docker file.')
+//         // 	}
+//         // });
+//     }
+// });
 
 // USE CASE 2 : Return Docker Image for pre-defined popular technology environments.
 controller.hears(dockerCmdREGEX, messageTypes, function(bot, message) {
@@ -103,7 +103,7 @@ controller.hears(dockerCmdREGEX, messageTypes, function(bot, message) {
 
 // TODO USE CASE 3 : Build Docker image from Github repo
 // Still in progress.
-controller.hears('use case 3', messageTypes, function(bot, message) {
+controller.hears(dockerFileREGEX, messageTypes, function(bot, message) {
     // if(!urlPattern.test(message.text)) {
     // 	bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
     // } else if(urlPattern.test(message.text) && !gitSite.test(message.text)) {
