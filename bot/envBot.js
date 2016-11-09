@@ -92,7 +92,7 @@ controller.hears("request", messageTypes, function(bot, message) {
 
     var title, pretext, text = '';
 
-    var stacks = /(mean|python|lamp)/i;
+    var stacks = /(mean|python|lamp|ubuntu|mysql|redis|postgres)/i;
     var stack = '';
     if (stacks.test(message.text)) {
         stack = stacks.exec(message.text)[0];
@@ -154,7 +154,6 @@ controller.hears('image', messageTypes, function(bot, message) {
 
     createDockerFile(repoData.link, function(dockerFile) {
         if (dockerFile) {
-
 
             if (repoData.link.charAt(repoData.link.length - 1) === '/') {
                 repoData.link = repoData.link.substring(0, repoData.link.length - 1);
