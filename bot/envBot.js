@@ -186,7 +186,6 @@ controller.hears('image', messageTypes, function(bot, message) {
             return bot.reply(message, 'Error in creating docker file.')
         }
     });
-    //}
 });
 
 function createDockerFile(repo, callback) {
