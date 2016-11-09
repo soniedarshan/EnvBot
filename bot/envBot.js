@@ -4,20 +4,15 @@ var Botkit = require('botkit'); // Botkit Object
 var constants = require('./constants');
 var dockerData = require('./dockerData');
 
-var messageTypes = ['direct_message','direct_mention','mention'];
+var messageTypes = ['direct_message', 'direct_mention', 'mention'];
 
 var gitSite = /(http|ftp|https):\/\/(github+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/;
 var urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
 
-var starterREGEX = [/hey/i, /help/i, /how/i];
-var dockerCmdREGEX = [/request docker image( |:)*(python|mean|lamp)*/i];
-var dockerFileREGEX = [/(docker file|dockerfile)/i, gitSite];
-
-
 /* TESTBOT_TOKEN must be initialized in Environment Variables
  * add : export TESTBOT_TOKEN='xxxx'
  * run : source ~/bash_profile
- */ 
+ */
 if (!process.env.TESTBOT_TOKEN) {
     console.log('Error: Specify token in environment');
     process.exit(1);
@@ -26,7 +21,7 @@ if (!process.env.TESTBOT_TOKEN) {
 /* DOCKERBOT_TOKEN must be initialized in Environment Variables
  * add : export DOCKERBOT_TOKEN='xxxx'
  * run : source ~/bash_profile
- */ 
+ */
 if (!process.env.DOCKERBOT_TOKEN) {
     console.log('Error: Specify token in environment');
     process.exit(1);
@@ -34,205 +29,203 @@ if (!process.env.DOCKERBOT_TOKEN) {
 
 // control verbosity
 var controller = Botkit.slackbot({
-  debug: false
+    debug: false
 });
 
-// start slack Real Time Messaging client 
+// start slack Real Time Messaging client
 controller.spawn({
-  token: process.env.DOCKERBOT_TOKEN
+    token: process.env.DOCKERBOT_TOKEN
 }).startRTM()
 
+
 // HANDLE HELP
-controller.hears(starterREGEX, messageTypes, function(bot,message) {
-	//'Hello <@'+message.user+'>, how may I be of help? Mention me, and type in Help, or tell me if you need me to set up an environment for you.'
-	var reply = {
-		"attachments": [
-        {
+controller.hears("help", messageTypes, function(bot, message) {
+    //'Hello <@'+message.user+'>, how may I be of help? Mention me, and type in Help, or tell me if you need me to set up an environment for you.'
+    var reply = {
+        "attachments": [{
             "fallback": "Hello <@" + message.user + ">, how may I be of help? Go to this link to check out the list of commands!",
             "pretext": "Hello <@" + message.user + ">, how may I be of help? Go to this link to check out the list of commands!",
             "title": "EnvBot, How-to",
             "title_link": "https://pages.github.ncsu.edu/dasoni/EnvBot/",
             "text": "Command Cheatsheet",
             "color": "#7CD197"
-        }
-    ]
-	};
-	bot.reply(message,reply);
+        }]
+    };
+    bot.reply(message, reply);
 });
 
 // USE CASE 1 : Generate a DockerFile from Github Repo
-controller.hears(dockerFileREGEX, messageTypes, function(bot, message) {
-	
-	if(!urlPattern.test(message.text)) {
-		bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
-	} else if(urlPattern.test(message.text) && !gitSite.test(message.text)) {
-		bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
-	} else {
-		
-		var repoData = {
-			body: message.text,
-			link: urlPattern.exec(message.text)[0]
-		};
+controller.hears("file", messageTypes, function(bot, message) {
+    if (!urlPattern.test(message.text)) {
+        bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
+    } else if (urlPattern.test(message.text) && !gitSite.test(message.text)) {
+        bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
+    } else {
 
-		console.log('Calling create docker file', repoData.link);
+        var repoData = {
+            body: message.text,
+            link: urlPattern.exec(message.text)[0]
+        };
 
-		createDockerFile(repoData.link, function(dockerFile) {
-			if (dockerFile) {
-				var reply = {
-					"attachments": [{
-						"title" : "Dockerfile",
-						"pretext" : "",
-						"text" : dockerFile,
-						"mrkdwn_in" : ["text", "pretext"]
-				}]};
-				return bot.reply(message, reply);
-			} else {
-				return bot.reply(message, 'Error in creating docker file.')
-			}
-		});
-	}
+        console.log('Calling create docker file', repoData.link);
+
+        createDockerFile(repoData.link, function(dockerFile) {
+            if (dockerFile) {
+                var reply = {
+                    "attachments": [{
+                        "title": "Dockerfile",
+                        "pretext": "",
+                        "text": dockerFile,
+                        "mrkdwn_in": ["text", "pretext"]
+                    }]
+                };
+                return bot.reply(message, reply);
+            } else {
+                return bot.reply(message, 'Error in creating docker file.')
+            }
+        });
+    }
 });
 
 // USE CASE 2 : Return Docker Image for pre-defined popular technology environments.
-controller.hears(dockerCmdREGEX, messageTypes, function(bot, message) {
-	
-	var title, pretext, text = '';
+controller.hears("request", messageTypes, function(bot, message) {
 
-	var stacks = /(mean|python|lamp)/i;
-	var stack = '';
-	if (stacks.test(message.text)) {
-		stack = stacks.exec(message.text)[0];
-	}
+    var title, pretext, text = '';
 
-	if (message.text === 'request docker image') {
-		title = 'Available Docker Images';
-		pretext = '';
+    var stacks = /(mean|python|lamp)/i;
+    var stack = '';
+    if (stacks.test(message.text)) {
+        stack = stacks.exec(message.text)[0];
+    }
 
-		var count = 1;
-		Object.keys(dockerData).forEach(function(key) {
-			text += count + ' ' + key + '\n';
-			count += 1;
-		});
+    if (message.text === 'request docker image') {
+        title = 'Available Docker Images';
+        pretext = '';
 
-	} else if (Object.keys(dockerData).includes(stack)) {
-		title = 'Commands';
-		pretext = 'You can enter the following commands to setup the docker image: ';
+        var count = 1;
+        Object.keys(dockerData).forEach(function(key) {
+            text += count + ' ' + key + '\n';
+            count += 1;
+        });
 
-		text = '';
+    } else if (Object.keys(dockerData).includes(stack)) {
+        title = 'Commands';
+        pretext = 'You can enter the following commands to setup the docker image: ';
 
-		dockerData[stack].forEach(function(cmd) {
-			text += cmd + "\n";
-		});
-	} else {
-		title = 'Available Docker Images';
-		pretext = 'Sorry. Docker image unavailable.';
+        text = '';
 
-		var count = 1;
-		Object.keys(dockerData).forEach(function(key) {
-			text += count + ' ' + key + '\n';
-			count += 1;
-		});
-	}
+        dockerData[stack].forEach(function(cmd) {
+            text += cmd + "\n";
+        });
+    } else {
+        title = 'Available Docker Images';
+        pretext = 'Sorry. Docker image unavailable.';
 
-	var reply = {
-		"attachments" : [{
-			"title" : title,
-			"pretext" : pretext,
-			"text" : text,
-			mrkdwn_in : ['text', 'pretext']
-		}]
-	};
+        var count = 1;
+        Object.keys(dockerData).forEach(function(key) {
+            text += count + ' ' + key + '\n';
+            count += 1;
+        });
+    }
 
-	bot.reply(message, reply)
+    var reply = {
+        "attachments": [{
+            "title": title,
+            "pretext": pretext,
+            "text": text,
+            mrkdwn_in: ['text', 'pretext']
+        }]
+    };
+
+    bot.reply(message, reply)
 });
 
 // TODO USE CASE 3 : Build Docker image from Github repo
 // Still in progress.
-// As mentioned in http://54.71.194.30:4014/docker-hub/builds/ : there is a manual process involved which cannot be manipulated without their API support. 
-controller.hears('use case 3', messageTypes, function(bot, message) {
-	// if(!urlPattern.test(message.text)) {
-	// 	bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
-	// } else if(urlPattern.test(message.text) && !gitSite.test(message.text)) {
-	// 	bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
-	// } else {
+// As mentioned in http://54.71.194.30:4014/docker-hub/builds/ : there is a manual process involved which cannot be manipulated without their API support.
+controller.hears('image', messageTypes, function(bot, message) {
+    // Temporarily linked to DockerizeMe repo
+    var repoData = {
+        body: message.text,
+        link: 'https://github.com/alt-code/DockerizeMe.git'
+    };
 
-		// Temporarily linked to DockerizeMe repo
-		var repoData = {
-			body: message.text,
-			link: 'https://github.com/alt-code/DockerizeMe.git'
-		};
+    console.log('Calling create docker file', repoData.link);
 
-		console.log('Calling create docker file', repoData.link);
-
-		createDockerFile(repoData.link, function(dockerFile) {
-			if (dockerFile) {
-				
-				
-				if (repoData.link.charAt(repoData.link.length-1) === '/') {
-					repoData.link = repoData.link.substring(0, repoData.link.length-1);
-				}
-
-				var repoName = repoData.link.substring(repoData.link.lastIndexOf('/')+1);
-				repoName = repoName.replace('.git', '');
-
-				createDockerImage(repoName, function(err, data) {
-					if (err) {
-						console.log('Error while creating docker Image : ' + err);
-					} else {
-						var command = 'docker pull ashah7/' + repoName.toLowerCase();
-						var reply = {
-							"attachments": [{
-								"title" : "Commands to pull Docker Image",
-								"pretext" : "",
-								"text" : command,
-								"mrkdwn_in" : ["text", "pretext"]
-						}]};
-
-						bot.reply(message, reply);
-					}
-				});
+    createDockerFile(repoData.link, function(dockerFile) {
+        if (dockerFile) {
 
 
-			} else {
-				return bot.reply(message, 'Error in creating docker file.')
-			}
-		});
-	//}
+            if (repoData.link.charAt(repoData.link.length - 1) === '/') {
+                repoData.link = repoData.link.substring(0, repoData.link.length - 1);
+            }
+
+            var repoName = repoData.link.substring(repoData.link.lastIndexOf('/') + 1);
+            repoName = repoName.replace('.git', '');
+
+            createDockerImage(repoName, function(err, data) {
+                if (err) {
+                    console.log('Error while creating docker Image : ' + err);
+                } else {
+                    var command = 'docker pull ashah7/' + repoName.toLowerCase();
+                    var reply = {
+                        "attachments": [{
+                            "title": "Commands to pull Docker Image",
+                            "pretext": "",
+                            "text": command,
+                            "mrkdwn_in": ["text", "pretext"]
+                        }]
+                    };
+
+                    bot.reply(message, reply);
+                }
+            });
+
+
+        } else {
+            return bot.reply(message, 'Error in creating docker file.')
+        }
+    });
+    //}
 });
 
 function createDockerFile(repo, callback) {
-	console.log('calling bash script');
-	const exec = require('child_process').exec;
+    console.log('calling bash script');
+    const exec = require('child_process').exec;
 
-	exec(`sh create_dockerfile.sh ${repo}`, {cwd : constants.cwd}, (error, stdout, stderr) => {
-		if (error) {
-			console.log(`Error in executing command : ${error}`);
-		} else if (stderr) {
-			console.log(`I/O Standard Error  : ${stderr}`);
-		} else {
-			console.log('return answer', stdout);
-			callback(stdout);
-		}
-	});
+    exec(`sh create_dockerfile.sh ${repo}`, {
+        cwd: constants.cwd
+    }, (error, stdout, stderr) => {
+        if (error) {
+            console.log(`Error in executing command : ${error}`);
+        } else if (stderr) {
+            console.log(`I/O Standard Error  : ${stderr}`);
+        } else {
+            console.log('return answer', stdout);
+            callback(stdout);
+        }
+    });
 }
 
 function createDockerImage(repoName, callback) {
-	
-	var cwd = './DockerizeMe/' + repoName + '/';
 
-	console.log('Calling dockerize.sh');
+    var cwd = './DockerizeMe/' + repoName + '/';
 
-	const exec = require('child_process').exec;
-	exec(`sh dockerize.sh ${repoName.toLowerCase()}`, {cwd : cwd}, (error, stdout, stderr) => {
-		if (error) {
-			console.log(`Error in executing command : ${error}`);
-			callback(error, stdout);
-		} else if (stderr) {
-			console.log(`I/O Standard Error  : ${stderr}`);
-			callback(stderr, stdout);
-		} else {
-			console.log('Docker image build and pushed successfully.')
-			callback(null, stdout);
-		}
-	});
+    console.log('Calling dockerize.sh');
+
+    const exec = require('child_process').exec;
+    exec(`sh dockerize.sh ${repoName.toLowerCase()}`, {
+        cwd: cwd
+    }, (error, stdout, stderr) => {
+        if (error) {
+            console.log(`Error in executing command : ${error}`);
+            callback(error, stdout);
+        } else if (stderr) {
+            console.log(`I/O Standard Error  : ${stderr}`);
+            callback(stderr, stdout);
+        } else {
+            console.log('Docker image build and pushed successfully.')
+            callback(null, stdout);
+        }
+    });
 }
