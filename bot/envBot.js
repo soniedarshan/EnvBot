@@ -98,9 +98,12 @@ controller.hears("request", messageTypes, function(bot, message) {
         stack = stacks.exec(message.text)[0];
         stack = stack.toLowerCase();
     }
+    var title_link = '';
 
     if (message.text === 'request docker image') {
         title = 'Available Docker Images';
+        title_link = 'https://pages.github.ncsu.edu/dasoni/EnvBot/';
+        color: '#7CD197'
         pretext = '';
 
         var count = 1;
@@ -133,6 +136,7 @@ controller.hears("request", messageTypes, function(bot, message) {
         "attachments": [{
             "title": title,
             "pretext": pretext,
+            "title_link": title_link,
             "text": text,
             mrkdwn_in: ['text', 'pretext']
         }]
