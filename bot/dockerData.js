@@ -11,23 +11,23 @@ module.exports = Object.freeze({
 		'`docker run -i -t -p 80:3000 maccam912/meanjs bash`'
 	],
 	'lamp' : [
-		'docker pull reinblau/lamp',
-		'docker run -it reinblau/lamp:5.6 /bin/bash'
+		'`docker pull reinblau/lamp`',
+		'`docker run -it reinblau/lamp:5.6 /bin/bash`'
 	],
 	'ubuntu' : [
-		'docker pull ubuntu',
-		'docker run -it ubuntu:14.04 /bin/bash'
+		'`docker pull ubuntu`',
+		'`docker run -it ubuntu:14.04 /bin/bash`'
 	],
 	'mysql' : [
-		'docker pull mysql',
-		'docker run -i -t mysql:8.0.0 /bin/bash'
+		'`docker pull mysql`',
+		'`docker run -i -t mysql:8.0.0 /bin/bash`'
 	],
 	'redis' : [
-		'docker pull redis',
-		'docker run -i -t redis:latest /bin/bash'
+		'`docker pull redis`',
+		'`docker run -i -t redis:latest /bin/bash`'
 	],
 	'postgres' : [
-		'docker pull postgres',
-		'docker run -i -t postgres:latest /bin/bash'
+		'`docker pull postgres`',
+		'`docker run -i -t postgres:latest /bin/bash`'
 	]
 });

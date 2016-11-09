@@ -96,6 +96,7 @@ controller.hears("request", messageTypes, function(bot, message) {
     var stack = '';
     if (stacks.test(message.text)) {
         stack = stacks.exec(message.text)[0];
+        stack = stack.toLowerCase();
     }
 
     if (message.text === 'request docker image') {
@@ -104,7 +105,7 @@ controller.hears("request", messageTypes, function(bot, message) {
 
         var count = 1;
         Object.keys(dockerData).forEach(function(key) {
-            text += count + ' ' + key + '\n';
+            text += count + '. ' + firstToUpperCase(key) + '\n';
             count += 1;
         });
 
@@ -123,7 +124,7 @@ controller.hears("request", messageTypes, function(bot, message) {
 
         var count = 1;
         Object.keys(dockerData).forEach(function(key) {
-            text += count + ' ' + key + '\n';
+            text += count + '. ' + key + '\n';
             count += 1;
         });
     }
@@ -204,6 +205,10 @@ function createDockerFile(repo, callback) {
             callback(stdout);
         }
     });
+}
+
+function firstToUpperCase( str ) {
+    return str.substr(0, 1).toUpperCase() + str.substr(1);
 }
 
 function createDockerImage(repoName, callback) {
