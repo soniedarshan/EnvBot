@@ -17,9 +17,17 @@ var dockerFileREGEX = [/(docker file|dockerfile)/i, gitSite];
 /* TESTBOT_TOKEN must be initialized in Environment Variables
  * add : export TESTBOT_TOKEN='xxxx'
  * run : source ~/bash_profile
- * TODO add : export ENVBOT_TOKEN='' 
  */ 
 if (!process.env.TESTBOT_TOKEN) {
+    console.log('Error: Specify token in environment');
+    process.exit(1);
+}
+
+/* DOCKERBOT_TOKEN must be initialized in Environment Variables
+ * add : export DOCKERBOT_TOKEN='xxxx'
+ * run : source ~/bash_profile
+ */ 
+if (!process.env.DOCKERBOT_TOKEN) {
     console.log('Error: Specify token in environment');
     process.exit(1);
 }
@@ -31,7 +39,7 @@ var controller = Botkit.slackbot({
 
 // start slack Real Time Messaging client 
 controller.spawn({
-  token: process.env.TESTBOT_TOKEN
+  token: process.env.DOCKERBOT_TOKEN
 }).startRTM()
 
 // HANDLE HELP
@@ -140,6 +148,7 @@ controller.hears(dockerCmdREGEX, messageTypes, function(bot, message) {
 
 // TODO USE CASE 3 : Build Docker image from Github repo
 // Still in progress.
+// As mentioned in http://54.71.194.30:4014/docker-hub/builds/ : there is a manual process involved which cannot be manipulated without their API support. 
 controller.hears('use case 3', messageTypes, function(bot, message) {
 	// if(!urlPattern.test(message.text)) {
 	// 	bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
@@ -147,6 +156,7 @@ controller.hears('use case 3', messageTypes, function(bot, message) {
 	// 	bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
 	// } else {
 
+		// Temporarily linked to DockerizeMe repo
 		var repoData = {
 			body: message.text,
 			link: 'https://github.com/alt-code/DockerizeMe.git'
@@ -169,7 +179,7 @@ controller.hears('use case 3', messageTypes, function(bot, message) {
 					if (err) {
 						console.log('Error while creating docker Image : ' + err);
 					} else {
-						var command = 'docker pull ashah7/' + repoName.toLowerCase;
+						var command = 'docker pull ashah7/' + repoName.toLowerCase();
 						var reply = {
 							"attachments": [{
 								"title" : "Commands to pull Docker Image",
@@ -221,6 +231,7 @@ function createDockerImage(repoName, callback) {
 			console.log(`I/O Standard Error  : ${stderr}`);
 			callback(stderr, stdout);
 		} else {
+			console.log('Docker image build and pushed successfully.')
 			callback(null, stdout);
 		}
 	});
