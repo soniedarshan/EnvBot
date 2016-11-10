@@ -100,6 +100,11 @@ controller.hears("request", messageTypes, function(bot, message) {
     }
     var title_link = '';
 
+    if (message.text.length < 20) {
+        bot.reply(message, "Invalid Command.");
+        return;
+    }
+
     if (message.text === 'request docker image') {
         title = 'Available Docker Images';
         title_link = 'https://pages.github.ncsu.edu/dasoni/EnvBot/';
