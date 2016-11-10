@@ -3,6 +3,7 @@
 var Botkit = require('botkit'); // Botkit Object
 var constants = require('./constants');
 var dockerData = require('./dockerData');
+var GitUrlParse = require("git-url-parse");
 
 var messageTypes = ['direct_message', 'direct_mention', 'mention'];
 
@@ -40,7 +41,6 @@ controller.spawn({
 
 // HANDLE HELP
 controller.hears("help", messageTypes, function(bot, message) {
-    //'Hello <@'+message.user+'>, how may I be of help? Mention me, and type in Help, or tell me if you need me to set up an environment for you.'
     var reply = {
         "attachments": [{
             "fallback": "Hello <@" + message.user + ">, how may I be of help? Go to this link to check out the list of commands!",
@@ -64,12 +64,13 @@ controller.hears("file", messageTypes, function(bot, message) {
 
         var repoData = {
             body: message.text,
-            link: urlPattern.exec(message.text)[0]
+            link: urlPattern.exec(message.text)[0],
+            name: GitUrlParse(urlPattern.exec(message.text)[0]).name
         };
 
-        console.log('Calling create docker file', repoData.link);
+        console.log('Repo name : ', repoData.name);
 
-        createDockerFile(repoData.link, function(dockerFile) {
+        createDockerFile(repoData, function(dockerFile) {
             if (dockerFile) {
                 var reply = {
                     "attachments": [{
@@ -155,28 +156,26 @@ controller.hears("request", messageTypes, function(bot, message) {
 // As mentioned in http://54.71.194.30:4014/docker-hub/builds/ : there is a manual process involved which cannot be manipulated without their API support.
 controller.hears('image', messageTypes, function(bot, message) {
     // Temporarily linked to DockerizeMe repo
+     if (!urlPattern.test(message.text)) {
+        bot.reply(message, '<@' + message.user + '>, Can I have the URL?');
+    } else if (urlPattern.test(message.text) && !gitSite.test(message.text)) {
+        bot.reply(message, '<@' + message.user + '>, Can I have a valid URL(i.e., belonging to a GitHub repository)?');
+    }
     var repoData = {
         body: message.text,
-        link: 'https://github.com/alt-code/DockerizeMe.git'
+        link: urlPattern.exec(message.text)[0],
+        name: GitUrlParse(urlPattern.exec(message.text)[0]).name
     };
-
     console.log('Calling create docker file', repoData.link);
 
-    createDockerFile(repoData.link, function(dockerFile) {
+    createDockerFile(repoData, function(dockerFile) {
         if (dockerFile) {
 
-            if (repoData.link.charAt(repoData.link.length - 1) === '/') {
-                repoData.link = repoData.link.substring(0, repoData.link.length - 1);
-            }
-
-            var repoName = repoData.link.substring(repoData.link.lastIndexOf('/') + 1);
-            repoName = repoName.replace('.git', '');
-
-            createDockerImage(repoName, function(err, data) {
+            createDockerImage(repoData.name, function(err, data) {
                 if (err) {
                     console.log('Error while creating docker Image : ' + err);
                 } else {
-                    var command = 'docker pull ashah7/' + repoName.toLowerCase();
+                    var command = 'docker pull ashah7/' + repoData.name.toLowerCase();
                     var reply = {
                         "attachments": [{
                             "title": "Commands to pull Docker Image",
@@ -189,19 +188,18 @@ controller.hears('image', messageTypes, function(bot, message) {
                     bot.reply(message, reply);
                 }
             });
-
-
         } else {
             return bot.reply(message, 'Error in creating docker file.')
         }
     });
 });
 
-function createDockerFile(repo, callback) {
+function createDockerFile(repoData, callback) {
     console.log('calling bash script');
     const exec = require('child_process').exec;
-
-    exec(`sh create_dockerfile.sh ${repo}`, {
+    var cmd = `sh create_dockerfile.sh ${repoData.link} ${repoData.name}`;
+    console.log(cmd); 
+    exec(cmd, {
         cwd: constants.cwd
     }, (error, stdout, stderr) => {
         if (error) {
@@ -209,7 +207,7 @@ function createDockerFile(repo, callback) {
         } else if (stderr) {
             console.log(`I/O Standard Error  : ${stderr}`);
         } else {
-            console.log('return answer', stdout);
+            console.log(stdout);
             callback(stdout);
         }
     });
