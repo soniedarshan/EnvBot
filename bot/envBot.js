@@ -200,7 +200,7 @@ function createDockerFile(repoData, callback) {
     var cmd = `sh create_dockerfile.sh ${repoData.link} ${repoData.name}`;
     console.log(cmd); 
     exec(cmd, {
-        cwd: constants.cwd
+        cwd: './DockerizeMe'
     }, (error, stdout, stderr) => {
         if (error) {
             console.log(`Error in executing command : ${error}`);
