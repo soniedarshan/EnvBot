@@ -7,7 +7,7 @@ var GitUrlParse = require("git-url-parse");
 
 var messageTypes = ['direct_message', 'direct_mention', 'mention'];
 
-var gitSite = /(http|ftp|https):\/\/(github+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/;
+var gitSite = /(http|ftp|https):\/\/(www.)?(github+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/;
 var urlPattern = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/;
 
 /* TESTBOT_TOKEN must be initialized in Environment Variables
