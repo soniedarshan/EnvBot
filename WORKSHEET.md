@@ -6,7 +6,7 @@
 | ------------- | ------------  | ------------  |  ------------
 | Use Case Documentation      | Define 3 usecases and their user interaction flow          | Complete | &nbsp;
 | DockerizeMe Usability Study      | Explore DockerizeMe and its integration with bot       | Complete |  #2 #5
-| Integrate Github, Docker, Slack Study     | Write toy examples to interact and integrate three services  |  Incomplete  |  #3
+| Integrate Github, Docker, Slack Study     | Write toy examples to interact and integrate three services  |  Complete  |  &nbsp;
 | Mocking    | Usecase 1 - S1,S2  | Complete | &nbsp;
 
 
@@ -58,4 +58,31 @@
 | ------------- | ------------  | ------------  |  ------------
 | Use Case 3 - Subflow      | S2       | Complete |  #8
 | Use Case 1 - Subflow      | S2       | Incomplete |  #3
-| Screencast      | Usecase 1,2,3       | Complete |  &nbsp;
+| Screencast      |Usecase 1,2,3       | Complete |  &nbsp;
+
+##### Week 7
+
+| Deliverable   | Item Description  | Status  | Issues
+| ------------- | ------------  | ------------  |  ------------
+| Deploy Manually on EC2      | Deployment        | Complete | &nbsp;
+| Manual Test Deployed Bot      | Bot Interaction       | Complete |  &nbsp;
+| Research Automated Deployment Options      | Configure Remote Environment       | Complete |  &nbsp;
+
+
+##### Week 8
+
+| Deliverable   | Item Description  | Status  | Issues
+| ------------- | ------------  | ------------  |  ------------
+| Handle EC2 Integration Issues    | DockerizeMe  | Complete | #5
+| Acceptance Testing    | U1  | Complete | &nbsp;
+| Acceptance Testing      | U2       | Complete |  &nbsp;
+
+##### Week 9
+
+| Deliverable   | Item Description  | Status  | Issues
+| ------------- | ------------  | ------------  |  ------------
+| Automated Deployment      | Playbook       | Incomplete |  #8
+| Automatic Process Restart    | Forever       | Incomplete |  #9
+| Acceptance Testing    | U3       | Incomplete |  &nbsp;
+| Screencast      | Deployment / Usecase 1,2,3       | Complete |  &nbsp;
+
