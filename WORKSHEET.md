@@ -83,6 +83,6 @@
 | ------------- | ------------  | ------------  |  ------------
 | Automated Deployment      | Playbook       | Complete |  #8
 | Automatic Process Restart    | Forever       | Complete |  #9
-| Acceptance Testing    | U3       | Incomplete |  &nbsp;
+| Acceptance Testing    | U3       | Complete |  &nbsp;
 | Screencast      | Deployment / Usecase 1,2,3       | Complete |  &nbsp;
 
