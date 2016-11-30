@@ -25,29 +25,18 @@
 
 
  - name: With the newly provisioned EC2 node configure that thing
-   hosts: launched # This uses the hosts that we put into the in-memory hosts repository with the add_host module.
-   become: yes # On EC2 nodes, this is automatically passwordless. 
-   remote_user: ubuntu # This is the username for all ubuntu images, rather than root, or something weird.
-   gather_facts: True  #We need to re-enable this, as we turned it off earlier.
+   hosts: launched 
+   become: yes 
+   remote_user: ubuntu 
+   gather_facts: True
    environment:
      DOCKERBOT_TOKEN: xoxb-94302876704-pQsTlozMwGgXXK6iJaUGip12
    tasks:
-     #- name: Setting up environment variables
-     #  script: setup-env-vars.sh
-     #- name: source bashrc
-     #  shell: . ~/.bashrc
      - name: Setting up Slack Token
        shell: export DOCKERBOT_TOKEN="xoxb-94302876704-pQsTlozMwGgXXK6iJaUGip12"
-     #- name: Adding Slack token to .bashrc
-     #  shell: . ~/ .bashrc
-     #- name: Setting up another Slack token to .bashrc
-     #  shell: export TESTBOT_TOKEN="xoxb-91938846433-MjiuU4Jean6yMFr30vUrQLhG"
      - name: Adding another token to .bashrc
-     #  shell: . ~/ .bashrc
        shell: dest=~/.bashrc line='export DOCKERBOT_TOKEN="xoxb-94302876704-pQsTlozMwGgXXK6iJaUGip12"' insertafter='EOF' state=present
      - name: Setting up Docker for Deployment
        script: docker-deployment.sh
      - name: Deploying bot
        script: deploy-bot.sh
-     # environment:
-     #   DOCKERBOT_TOKEN: xoxb-94302876704-pQsTlozMwGgXXK6iJaUGip12
