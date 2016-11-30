@@ -81,8 +81,8 @@
 
 | Deliverable   | Item Description  | Status  | Issues
 | ------------- | ------------  | ------------  |  ------------
-| Automated Deployment      | Playbook       | Incomplete |  #8
-| Automatic Process Restart    | Forever       | Incomplete |  #9
+| Automated Deployment      | Playbook       | Complete |  #8
+| Automatic Process Restart    | Forever       | Complete |  #9
 | Acceptance Testing    | U3       | Incomplete |  &nbsp;
 | Screencast      | Deployment / Usecase 1,2,3       | Complete |  &nbsp;
 
