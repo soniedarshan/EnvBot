@@ -12,10 +12,15 @@ Setting up project repositories from GitHub is a common initial step in the deve
 
 ### Screenshots
 
+## Help Command
 ![Help](https://media.github.ncsu.edu/user/4504/files/1ba5e818-ba41-11e6-8b39-46ced39b2395)
+## Help Page
 ![Help Page](https://media.github.ncsu.edu/user/4504/files/3bbbb830-ba41-11e6-84d0-fb6c131388cf)
+## Use Case 1
 ![Use Case 1](https://media.github.ncsu.edu/user/4504/files/500ad794-ba41-11e6-8250-2e63d9a4aeb3)
+## Use Case 2
 ![Use Case 2](https://media.github.ncsu.edu/user/4504/files/6170fa0e-ba41-11e6-897c-1c6d2476249e)
+## Use Case 3
 ![Use Case 3](https://media.github.ncsu.edu/user/4504/files/77ab62fa-ba41-11e6-9a76-28574f86b73e)
 
 ### Demo Video
