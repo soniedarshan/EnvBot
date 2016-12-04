@@ -28,8 +28,11 @@ Setting up project repositories from GitHub is a common initial step in the deve
 ![Demo Video](https://youtu.be/G8r2dEbfXQ4)
 
 ### Reflection on development process & project
+The development process followed for this project was iterative. Iterative development prescribes the construction of initially small but ever larger portions of a software project to help all those involved to uncover important issues early before problems or faulty assumptions can lead to disaster. Our development process started with exploring various use cases of DockerizeMe and thinking of how DockerizeMe can be integrated with a slackbot. After looking at the capabilities of DockerizeMe, mini use-cases were implemented woth mock data and slack interactions were created supoorted by Selenium testing of the same. The initial design was shaped into final architecutre for a full-fledged systemp to accomplish our project goals ,i.e., the three use-cases. With the implementation of minor toy-use cases in the beginning, we were able to eliminate bad design choices early in our development phase. The fully designed system was tested using mock data and later was polished for the deployment on local server. At the end, the bot was deployed on AWS server by following automated deployment process.  
 
-[TODO]
+Our four member team collaborated with each other and did individual's best to complete the whole project. All project requirements and pending tasks were mapped out using Trello cards as well as worksheet. The use of such task tracking techniques was vey useful in anticipating effor requirements and communicationg for task delegation among the team members.
+The milestone delivery format adapted by professor made sure that all the software components were delivered on time with efficient project planning.
+
 
 ### Limitations & Future Work
 
