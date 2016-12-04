@@ -25,7 +25,7 @@ Setting up project repositories from GitHub is a common initial step in the deve
 
 ### Demo Video
 
-![Demo Video](https://youtu.be/G8r2dEbfXQ4)
+![Demo Video](https://www.youtube.com/watch?v=G8r2dEbfXQ4&feature=youtu.be)
 
 ### Reflection on development process & project
 
