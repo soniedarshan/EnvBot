@@ -10,6 +10,10 @@ Setting up project repositories from GitHub is a common initial step in the deve
 2. Used [docker](https://www.docker.com/) to create and build docker containers and image and pushed them on a private bot account [Docker Hub](hub.docker.com). 
 3. Made available commands to setup popular environments and technological stacks present on docker registry.
 
+###Screenshots
+
+![Help](https://media.github.ncsu.edu/user/4504/files/1ba5e818-ba41-11e6-8b39-46ced39b2395)
+
 ### Reflection on development process & project
 
 [TODO]
